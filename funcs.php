@@ -33,10 +33,6 @@ function sendMessage($chatId, $text, $replyTo = '', $replyMarkup = '') {
     'reply_markup' => $replyMarkup
   );
   return makeApiRequest('sendMessage', $data);
-
-  $response = file_get_contents($config['url'] . "sendMessage?disable_web_page_preview=true&parse_mode=html&chat_id=$chatId&text=" . urlencode($text) . "&reply_to_message_id=$replyTo&reply_markup=$replyMarkup");
-  //Might use http_build_query in the future
-  return json_decode($response, true)['result'];
 }
 
 function makeApiRequest($method, $data){
