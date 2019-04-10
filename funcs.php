@@ -23,7 +23,6 @@ function notifyOnException($subject, $config, $sql = '', $e = '') {
 }
 
 function sendMessage($chatId, $text, $replyTo = '', $replyMarkup = '') {
-  global $config;
   $data = array(
     'disable_web_page_preview' => true,
     'parse_mode' => 'html',
@@ -51,24 +50,10 @@ function makeApiRequest($method, $data){
 }
 
 function answerInlineQuery($inlineQueryId, $results) {
-  global $config;
-  //$response = file_get_contents($config['url'] . "answerInlineQuery?inline_query_id=$inlineQueryId&results=$results&is_personal=true");
-  $url = $config['url'] . "answerInlineQuery";
-
   $data = array(
     'inline_query_id' => $inlineQueryId,
     'results' => $results
   );
-  /*// use key 'http' even if you send the request to https://...
-  $options = array(
-    'http' => array(
-      'header' => "Content-type: application/json\r\n",
-      'method' => 'POST',
-      'content' => json_encode($data)
-    )
-  );
-  $context = stream_context_create($options);
-  $result = file_get_contents($url, false, $context);*/
   return makeApiRequest('answerInlineQuery', $data);
 }
 
