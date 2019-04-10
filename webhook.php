@@ -16,8 +16,8 @@ if (isset($data['inline_query'])) {
   $polls = searchForSong($search);
   foreach ($polls as $poll) {
     $songId = $poll['id'];
-    $songArtist = $poll['title'];
-    $songTitle = $poll['text'];
+    $songArtist = $poll['artist'];
+    $songTitle = $poll['title'];
     $results[] = array(
       'type' => 'article',
       'id' => $songId,
