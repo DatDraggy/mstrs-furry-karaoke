@@ -24,6 +24,16 @@ function notifyOnException($subject, $config, $sql = '', $e = '') {
 
 function sendMessage($chatId, $text, $replyTo = '', $replyMarkup = '') {
   global $config;
+  $data = array(
+    'disable_web_page_preview' => true,
+    'parse_mode' => 'html',
+    'chat_id' => $chatId,
+    'text' => $text,
+    'reply_to_message_id' => $replyTo,
+    'reply_markup' => $replyMarkup
+  );
+  return makeApiRequest('sendMessage', $data);
+
   $response = file_get_contents($config['url'] . "sendMessage?disable_web_page_preview=true&parse_mode=html&chat_id=$chatId&text=" . urlencode($text) . "&reply_to_message_id=$replyTo&reply_markup=$replyMarkup");
   //Might use http_build_query in the future
   return json_decode($response, true)['result'];
@@ -41,7 +51,7 @@ function makeApiRequest($method, $data){
     )
   );
   $context = stream_context_create($options);
-  return file_get_contents($url, false, $context);
+  return json_decode(file_get_contents($url, false, $context), true)['result'];
 }
 
 function answerInlineQuery($inlineQueryId, $results) {
@@ -63,7 +73,7 @@ function answerInlineQuery($inlineQueryId, $results) {
   );
   $context = stream_context_create($options);
   $result = file_get_contents($url, false, $context);*/
-  makeApiRequest('answerInlineQuery', $data);
+  return makeApiRequest('answerInlineQuery', $data);
 }
 
 function searchForSong($search) {
