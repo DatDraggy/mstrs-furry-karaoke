@@ -33,7 +33,10 @@ ID: $songId",
         'disable_web_page_preview' => true
       ),
       'description' => "$songArtist
-$songLanguage"
+$songLanguage
+Zeile 3
+Zeile 4
+Zeile 5"
     );
   }
   answerInlineQuery($inlineQueryId, $results);
@@ -60,7 +63,7 @@ if (isset($text)) {
   $command = strtolower($command);
   switch ($command) {
     case '/start':
-      sendMessage($chatId, $commands[$command][$languageCode]);
+      sendMessage($chatId, 'Hello.');
       break;
     case '/help':
       sendMessage();
