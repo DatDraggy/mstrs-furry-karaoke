@@ -62,8 +62,8 @@ function searchForSong($search) {
 
   $search = '%' . $search . '%';
   try {
-    $sql = "SELECT id, artist, title, language FROM mstr WHERE artist LIKE '$search' OR title LIKE '$search' ORDER BY id DESC LIMIT 50";
-    $stmt = $dbConnection->prepare('SELECT id, artist, title, language FROM mstr WHERE artist LIKE :search OR title LIKE :search2 ORDER BY id DESC LIMIT 50');
+    $sql = "SELECT id, artist, title, language FROM mstr WHERE artist LIKE '$search' OR title LIKE '$search' ORDER BY title LIMIT 50";
+    $stmt = $dbConnection->prepare('SELECT id, artist, title, language FROM mstr WHERE artist LIKE :search OR title LIKE :search2 ORDER BY title LIMIT 50');
     $stmt->bindParam(':search', $search);
     $stmt->bindParam(':search2', $search);
     $stmt->execute();
