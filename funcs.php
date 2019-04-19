@@ -40,6 +40,7 @@ function makeApiRequest($method, $data){
 
   $options = array(
     'http' => array(
+      'ignore_errors' => true,
       'header' => "Content-type: application/json\r\n",
       'method' => 'POST',
       'content' => json_encode($data)
