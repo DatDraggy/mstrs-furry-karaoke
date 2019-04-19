@@ -49,21 +49,23 @@ function makeApiRequest($method, $data){
   return json_decode(file_get_contents($url, false, $context), true)['result'];
 }
 
-function answerInlineQuery($inlineQueryId, $results) {
+function answerInlineQuery($inlineQueryId, $results, $offset = '0') {
   $data = array(
     'inline_query_id' => $inlineQueryId,
-    'results' => $results
+    'results' => $results,
+    'offset' => $offset
   );
   return makeApiRequest('answerInlineQuery', $data);
 }
 
-function searchForSong($search) {
+function searchForSong($search, $offset = 1) {
   global $dbConnection, $config;
-
+  $offset -= 1;
+  $endoffset = $offset + 50;
   $search = '%' . $search . '%';
   try {
-    $sql = "SELECT id, artist, title, language FROM mstr WHERE artist LIKE '$search' OR title LIKE '$search' ORDER BY artist, title LIMIT 50";
-    $stmt = $dbConnection->prepare('SELECT id, artist, title, language FROM mstr WHERE artist LIKE :search OR title LIKE :search2 ORDER BY artist, title  LIMIT 50');
+    $sql = "SELECT id, artist, title, language FROM mstr WHERE artist LIKE '$search' OR title LIKE '$search' ORDER BY artist, title LIMIT $offset, $endoffset";
+    $stmt = $dbConnection->prepare('SELECT id, artist, title, language FROM mstr WHERE artist LIKE :search OR title LIKE :search2 ORDER BY artist, title LIMIT ' . $offset . ', ' . $endoffset);
     $stmt->bindParam(':search', $search);
     $stmt->bindParam(':search2', $search);
     $stmt->execute();
