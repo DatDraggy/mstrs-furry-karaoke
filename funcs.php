@@ -46,7 +46,7 @@ function makeApiRequest($method, $data){
     )
   );
   $context = stream_context_create($options);
-  return json_decode(file_get_contents($url, false, $context), true)['result'];
+  return json_decode(file_get_contents($url, false, $context), true);
 }
 
 function answerInlineQuery($inlineQueryId, $results, $offset = '0') {
