@@ -48,7 +48,7 @@ function makeApiRequest($method, $data){
   );
   $context = stream_context_create($options);
   $return = json_decode(file_get_contents($url, false, $context), true);
-  if ($return['ok'] !== 1){
+  if ($return['ok'] != 1){
     mail($config['mail'], 'Error', print_r($return, true) . "\n" . print_r($options, true) . "\n" . __FILE__);
   }
   return $return['result'];
