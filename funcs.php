@@ -58,7 +58,7 @@ function answerInlineQuery($inlineQueryId, $results, $offset) {
   $data = array(
     'inline_query_id' => $inlineQueryId,
     'results' => $results,
-    'new_offset' => $offset + 50
+    'next_offset' => $offset + 50
   );
   return makeApiRequest('answerInlineQuery', $data);
 }

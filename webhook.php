@@ -12,7 +12,7 @@ if (isset($data['inline_query'])) {
   $search = $data['inline_query']['query'];
   $newOffset = $data['inline_query']['offset'];
 mail($config['mail'], 'Debug', $dump);
-  if ($newOffset == '' || $newOffset == 0) {
+  if ($newOffset === '' || $newOffset === 0) {
     $offset = 0;
   } /*elseif (is_numeric($oldOffset)) {
     $offset = $oldOffset + 50;
