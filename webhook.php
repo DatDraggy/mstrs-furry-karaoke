@@ -45,7 +45,7 @@ $songLanguage
 Zeile 3"
     );
   }
-  mail($config['mail'], 'Debug', answerInlineQuery($inlineQueryId, $results, $offset));
+  mail($config['mail'], 'Debug', print_r(answerInlineQuery($inlineQueryId, $results, $offset)));
   die();
 }
 
