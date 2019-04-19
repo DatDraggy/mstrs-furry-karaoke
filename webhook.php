@@ -14,7 +14,7 @@ if (isset($data['inline_query'])) {
 mail($config['mail'], 'Debug', $dump);
   if ($newOffset === '' || $newOffset === 0) {
     $offset = 0;
-  }else{$offset = $newOffset} /*elseif (is_numeric($oldOffset)) {
+  }else{$offset = $newOffset;} /*elseif (is_numeric($oldOffset)) {
     $offset = $oldOffset + 50;
   }*/
 
