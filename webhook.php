@@ -10,16 +10,15 @@ if (isset($data['inline_query'])) {
   $inlineQueryId = $data['inline_query']['id'];
   $senderUserId = $data['inline_query']['from']['id'];
   $search = $data['inline_query']['query'];
-  $oldOffset = $data['inline_query']['offset'];
+  $newOffset = $data['inline_query']['offset'];
 
-  if ($oldOffset === '' || $oldOffset === 0) {
-    $offset = 1;
-  } elseif (is_numeric($oldOffset)) {
+  if ($newOffset === '' || $newOffset === 0) {
+    $offset = 0;
+  } /*elseif (is_numeric($oldOffset)) {
     $offset = $oldOffset + 50;
-  }
+  }*/
 
   $results = array();
-  //Return all polls from $senderUserId
 
   $songs = searchForSong($search, $offset);
   foreach ($songs as $song) {

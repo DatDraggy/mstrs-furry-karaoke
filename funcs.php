@@ -54,18 +54,17 @@ function makeApiRequest($method, $data){
   return $return['result'];
 }
 
-function answerInlineQuery($inlineQueryId, $results, $offset = '0') {
+function answerInlineQuery($inlineQueryId, $results, $offset) {
   $data = array(
     'inline_query_id' => $inlineQueryId,
     'results' => $results,
-    'offset' => $offset
+    'new_offset' => $offset + 50
   );
   return makeApiRequest('answerInlineQuery', $data);
 }
 
-function searchForSong($search, $offset = 1) {
+function searchForSong($search, $offset) {
   global $dbConnection, $config;
-  $offset -= 1;
   $endoffset = $offset + 50;
   $search = '%' . $search . '%';
   try {
