@@ -61,7 +61,7 @@ function answerInlineQuery($inlineQueryId, $results, $offset = '0') {
 function searchForSong($search, $offset = 1) {
   global $dbConnection, $config;
   $offset -= 1;
-  $endoffset = $offset + 50;
+  $endoffset = $offset + 49;
   $search = '%' . $search . '%';
   try {
     $sql = "SELECT id, artist, title, language FROM mstr WHERE artist LIKE '$search' OR title LIKE '$search' ORDER BY artist, title LIMIT $offset, $endoffset";
