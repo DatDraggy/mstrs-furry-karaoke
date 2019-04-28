@@ -68,7 +68,8 @@ if (isset($text)) {
   $command = strtolower($command);
   switch ($command) {
     case '/start':
-      sendMessage($chatId, 'Hello.');
+      sendMessage($chatId, 'Hello.
+Need some help? /help');
       break;
     case '/help':
       sendMessage($chatId, 'Here is a List of all usable commands:

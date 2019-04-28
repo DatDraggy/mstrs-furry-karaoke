@@ -23,15 +23,21 @@ function notifyOnException($subject, $config, $sql = '', $e = '') {
 }
 
 function sendMessage($chatId, $text, $replyTo = '', $replyMarkup = '') {
-  $data = array(
-    'disable_web_page_preview' => true,
-    'parse_mode' => 'html',
-    'chat_id' => $chatId,
-    'text' => $text,
-    'reply_to_message_id' => $replyTo,
-    'reply_markup' => $replyMarkup
-  );
-  return makeApiRequest('sendMessage', $data);
+  if (strlen($text) > 4096){
+    sendMessage($chatId, substr($text, 0, 4096), $replyTo, $replyMarkup);
+    sendMessage($chatId, substr($text, 4096), $replyTo, $replyMarkup);
+  }
+  else {
+    $data = array(
+      'disable_web_page_preview' => true,
+      'parse_mode' => 'html',
+      'chat_id' => $chatId,
+      'text' => $text,
+      'reply_to_message_id' => $replyTo,
+      'reply_markup' => $replyMarkup
+    );
+    return makeApiRequest('sendMessage', $data);
+  }
 }
 
 function makeApiRequest($method, $data){
@@ -102,7 +108,8 @@ function getSongsByTag($tag){
     }
     $songs .= "
 $artist
-$title";
+$title
+";
   }
   return $songs;
 }
