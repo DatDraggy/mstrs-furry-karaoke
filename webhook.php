@@ -71,9 +71,26 @@ if (isset($text)) {
       sendMessage($chatId, 'Hello.');
       break;
     case '/help':
-      sendMessage();
+      sendMessage($chatId, 'Here is a List of all usable commands:
+Get songs by tag:
+/anime
+/bollywood
+/cartoon
+/disney
+/movie
+/comedy
+/manga
+/musical
+/opera
+/series
+/game
+/visualNovel');
       break;
     default:
-      sendMessage($chatId, 'Hm, das kenne ich leider nicht...', $messageId);
+      if (array_key_exists($command, $tags)){
+        getSongsByTag($tags[$command]);
+      }else{
+        sendMessage($chatId, 'Hm, das kenne ich leider nicht...', $messageId);
+      }
   }
 }

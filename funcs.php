@@ -78,3 +78,31 @@ function searchForSong($search, $offset) {
   }
   return false;
 }
+
+function getSongsByTag($tag){
+  global $dbConnection, $config;
+
+  try {
+    $sql = "SELECT artist, title, language FROM mstr WHERE tags = '$tag'";
+    $stmt = $dbConnection->prepare('SELECT artist, title, language FROM mstr WHERE tags = :tag');
+    $stmt->bindParam(':tag', $tag);
+    $stmt->execute();
+    $rows = $stmt->fetchAll();
+  }
+  catch(PDOException $e) {
+    notifyOnException('Database Select', $config, $sql, $e);
+  }
+  $songs = '';
+  foreach($rows as $row){
+    $artist = $row['artist'];
+    $title = $row['title'];
+    if (!empty($row['language'])){
+      $title .= '
+' . $row['language'];
+    }
+    $songs .= "
+$artist
+$title";
+  }
+  return $songs;
+}
