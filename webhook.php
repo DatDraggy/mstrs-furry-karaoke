@@ -88,8 +88,11 @@ Get songs by tag:
       break;
     default:
       if (array_key_exists($command, $tags)){
-        getSongsByTag($tags[$command]);
-      }else{
+        $dbConnection = buildDatabaseConnection($config);
+        $songs = getSongsByTag($tags[$command]);
+        sendMessage($chatId, "Songs tagged with '$command':
+$songs");
+      } else{
         sendMessage($chatId, 'Hm, das kenne ich leider nicht...', $messageId);
       }
   }
