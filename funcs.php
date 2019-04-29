@@ -73,8 +73,8 @@ function searchForSong($search, $offset) {
   global $dbConnection, $config;
   $search = '%' . $search . '%';
   try {
-    $sql = "SELECT id, artist, title, language FROM mstr WHERE artist LIKE '$search' OR title LIKE '$search' ORDER BY artist, title LIMIT $offset, 50";
-    $stmt = $dbConnection->prepare('SELECT id, artist, title, language FROM mstr WHERE artist LIKE :search OR title LIKE :search2 ORDER BY artist, title LIMIT ' . $offset . ', 50');
+    $sql = "SELECT id, artist, title, language, tags FROM mstr WHERE artist LIKE '$search' OR title LIKE '$search' ORDER BY artist, title LIMIT $offset, 50";
+    $stmt = $dbConnection->prepare('SELECT id, artist, title, language, tags FROM mstr WHERE artist LIKE :search OR title LIKE :search2 ORDER BY artist, title LIMIT ' . $offset . ', 50');
     $stmt->bindParam(':search', $search);
     $stmt->bindParam(':search2', $search);
     $stmt->execute();

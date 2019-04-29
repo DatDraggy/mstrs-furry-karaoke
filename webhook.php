@@ -26,6 +26,7 @@ if (isset($data['inline_query'])) {
     $songArtist = $song['artist'];
     $songTitle = $song['title'];
     $songLanguage = $song['language'];
+    $songTags = $song['tags'];
     $results[] = array(
       'type' => 'article',
       'id' => $songId,
@@ -41,7 +42,7 @@ ID: $songId",
       ),
       'description' => "$songArtist
 $songLanguage
-Zeile 3"
+$songTags"
     );
   }
   answerInlineQuery($inlineQueryId, $results, $offset);
