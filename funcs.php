@@ -62,11 +62,15 @@ function makeApiRequestB($method, $data) {
 function makeApiRequest($method, $data) {
   global $config, $client;
   if (!($client instanceof \GuzzleHttp\Client)) {
-    $client = new \GuzzleHttp\Client(['base_uri' => $config['url']]);
+    $client = new \GuzzleHttp\Client(array(
+      'headers' => [
+        'Content-Type' => 'application/json'
+      ]
+    ));
   }
   try {
-//    $response = $client->post($method, array('query' => $data));
-    $response = $client->request('POST', $method, array('query' => $data));
+    //    $response = $client->post($method, array('query' => $data));
+    $response = $client->request('POST', $config['url'] . $method, array('query' => $data));
   } catch (\GuzzleHttp\Exception\BadResponseException $e) {
     $body = $e->getResponse()->getBody();
     mail($config['mail'], 'Test', print_r($body->getContents(), true));
