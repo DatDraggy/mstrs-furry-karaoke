@@ -23,10 +23,11 @@ function notifyOnException($subject, $config, $sql = '', $e = '') {
 }
 
 function sendMessage($chatId, $text, $replyTo = '', $replyMarkup = '') {
-  if (strlen($text) > 4096) {
+  if (strlen($text) > 4096){
     sendMessage($chatId, substr($text, 0, 4096), $replyTo, $replyMarkup);
     sendMessage($chatId, substr($text, 4096), $replyTo, $replyMarkup);
-  } else {
+  }
+  else {
     $data = array(
       'disable_web_page_preview' => true,
       'parse_mode' => 'html',
@@ -39,24 +40,24 @@ function sendMessage($chatId, $text, $replyTo = '', $replyMarkup = '') {
   }
 }
 
-function makeApiRequest($method, $data) {
-  global $config, $client;
-  if (!($client instanceof \GuzzleHttp\Client)) {
-    $client = new \GuzzleHttp\Client([
-      'base_uri' => $config['url'],
-      'headers' => [
-        'Content-Type' => 'application/json'
-      ]
-    ]);
-  }
-  try {
-    $response = $client->post($method, array('query' => json_encode($data)));
-  } catch (\GuzzleHttp\Exception\BadResponseException $e) {
-    $body = $e->getResponse()->getBody();
-    mail($config['mail'], 'Error', print_r($body->getContents(), true) . "\n" . print_r($data, true) . "\n" . __FILE__);
+function makeApiRequest($method, $data){
+  global $config;
+  $url = $config['url'] . $method;
 
+  $options = array(
+    'http' => array(
+      'ignore_errors' => true,
+      'header' => "Content-type: application/json\r\n",
+      'method' => 'POST',
+      'content' => json_encode($data)
+    )
+  );
+  $context = stream_context_create($options);
+  $return = json_decode(file_get_contents($url, false, $context), true);
+  if ($return['ok'] != 1){
+    mail($config['mail'], 'Error', print_r($return, true) . "\n" . print_r($options, true) . "\n" . __FILE__);
   }
-  return json_decode($response->getBody(), true)['result'];
+  return $return['result'];
 }
 
 function answerInlineQuery($inlineQueryId, $results, $offset) {
@@ -84,7 +85,7 @@ function searchForSong($search, $offset) {
   return false;
 }
 
-function getSongsByTag($tag) {
+function getSongsByTag($tag){
   global $dbConnection, $config;
 
   try {
@@ -93,14 +94,15 @@ function getSongsByTag($tag) {
     $stmt->bindParam(':tag', $tag);
     $stmt->execute();
     $rows = $stmt->fetchAll();
-  } catch (PDOException $e) {
+  }
+  catch(PDOException $e) {
     notifyOnException('Database Select', $config, $sql, $e);
   }
   $songs = '';
-  foreach ($rows as $row) {
+  foreach($rows as $row){
     $artist = $row['artist'];
     $title = $row['title'];
-    if (!empty($row['language'])) {
+    if (!empty($row['language'])){
       $title .= '
 ' . $row['language'];
     }
