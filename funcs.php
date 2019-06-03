@@ -70,7 +70,7 @@ function makeApiRequest($method, $data) {
   }
   try {
     //    $response = $client->post($method, array('query' => $data));
-    $response = $client->request('POST', $config['url'] . $method, array('content' => $data));
+    $response = $client->request('POST', $config['url'] . $method, array('content' => json_encode($data)));
   } catch (\GuzzleHttp\Exception\BadResponseException $e) {
     $body = $e->getResponse()->getBody();
     mail($config['mail'], 'Test', print_r($body->getContents(), true));
