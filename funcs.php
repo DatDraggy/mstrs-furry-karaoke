@@ -46,7 +46,7 @@ function makeApiRequest($method, $data) {
     $client = new \GuzzleHttp\Client(['base_uri' => $config['url']]);
   }
   try {
-    $response = $client->post($method, array('query' => $data));
+    $response = $client->post($method, array('query' => json_encode($data)));
   } catch (\GuzzleHttp\Exception\BadResponseException $e) {
     $body = $e->getResponse()->getBody();
     mail($config['mail'], 'Test', print_r($body->getContents(), true));
