@@ -59,26 +59,6 @@ function makeApiRequest($method, $data) {
   return json_decode($response->getBody(), true)['result'];
 }
 
-function makeApiRequest($method, $data) {
-  global $config;
-  $url = $config['url'] . $method;
-
-  $options = array(
-    'http' => array(
-      'ignore_errors' => true,
-      'header' => "Content-type: application/json\r\n",
-      'method' => 'POST',
-      'content' => json_encode($data)
-    )
-  );
-  $context = stream_context_create($options);
-  $return = json_decode(file_get_contents($url, false, $context), true);
-  if ($return['ok'] != 1) {
-    mail($config['mail'], 'Error', print_r($return, true) . "\n" . print_r($options, true) . "\n" . __FILE__);
-  }
-  return $return['result'];
-}
-
 function answerInlineQuery($inlineQueryId, $results, $offset) {
   $data = array(
     'inline_query_id' => $inlineQueryId,
