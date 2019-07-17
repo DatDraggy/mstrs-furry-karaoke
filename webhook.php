@@ -91,7 +91,9 @@ Hier ist eine Liste aller Tags:
 /opera
 /series
 /game
-/visualNovel');
+/visualNovel
+
+Um eine Liste aller Songs zu sehen, folge bitte diesem Link: <a href="https://drgn.li/karaoke">drgn.li/karaoke</a>');
       break;
     default:
       if (array_key_exists($command, $tags)){
