@@ -34,10 +34,10 @@ if (isset($data['inline_query'])) {
       'id' => $songId,
       'title' => "$songTitle",
       'input_message_content' => array(
-        'message_text' => "<b>My Song Choice:</b>
-Artist: $songArtist
-Title: $songTitle
-Language: $songLanguage
+        'message_text' => "<b>Mein Songwahl:</b>
+Künstler: $songArtist
+Titel: $songTitle
+Sprache: $songLanguage
 ID: $songId",
         'parse_mode' => 'html',
         'disable_web_page_preview' => true
@@ -71,12 +71,15 @@ if (isset($text)) {
   $command = strtolower($command);
   switch ($command) {
     case '/start':
-      sendMessage($chatId, 'Hello.
-Need some help? /help');
+      sendMessage($chatId, 'Hallo. Ich bin Mstr\'s Karaoke Bot!
+Durch mich kannst du eine Song suchen und ihn direkt teilen.
+Brauchst du Hilfe? /hilfe');
       break;
-    case '/help':
-      sendMessage($chatId, 'Here is a List of all usable commands:
-Get songs by tag:
+    case '/hilfe':
+      sendMessage($chatId, 'Die Suche funktioniert so, wie die @gif-Suche von Telegram. 
+Um die Suche zu starten, gebe unten in das Textfeld <code>@MstrFurryKaraoke_bot</code> ein und dahinter einen Suchbegriff.
+
+Hier ist eine Liste aller Tags:
 /anime
 /bollywood
 /cartoon
@@ -94,7 +97,7 @@ Get songs by tag:
       if (array_key_exists($command, $tags)){
         $dbConnection = buildDatabaseConnection($config);
         $songs = getSongsByTag($tags[$command]);
-        sendMessage($chatId, "Songs tagged with '$command':
+        sendMessage($chatId, "Songs mit dem Tag '$command':
 $songs");
       } else{
         sendMessage($chatId, 'Hm, das kenne ich leider nicht...', $messageId);
